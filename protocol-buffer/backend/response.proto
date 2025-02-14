@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package message;
 
-option go_package = "github.com/jonahlewis4/web/proto";
+option go_package = "./";
 
 message Message {
 	string message = 1;
