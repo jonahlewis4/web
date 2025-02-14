@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	protoMsg "github.com/jonahlewis4/web/protocol-buffer/proto"
+	protoMsg "github.com/jonahlewis4/web/protocol-buffer/backend/proto"
 	"google.golang.org/protobuf/proto"
 	"net/http"
 )

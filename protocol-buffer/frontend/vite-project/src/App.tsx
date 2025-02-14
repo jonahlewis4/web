@@ -1,14 +1,19 @@
 import {useEffect, useState} from "react"
+import {MessageSchema} from './proto/response_pb.ts'
+import {fromBinary} from '@bufbuild/protobuf'
 import axios from "axios"
 function App() {
     const [message, setMessage] = useState("")
-
+    const [num, setNum] = useState<number>(-1)
     const getResponse = async () => {
-        const response = await axios.get('http://localhost:8080/response')
+        const response = await axios.get('http://localhost:8080/response', {responseType: "arraybuffer"})
         if (response === null){
             setMessage("")
         } else {
-            setMessage(response.data)
+            const data = new Uint8Array(response.data)
+            const message = fromBinary(MessageSchema, data);
+            setMessage(message.message)
+            setNum(message.num)
         }
 
     }
@@ -17,6 +22,9 @@ function App() {
     }, []);
     return <>
         {message}
+        <br/>
+        {num}
+
     </>
 }
 

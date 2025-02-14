@@ -1,0 +1,8 @@
+# Learn more: https://buf.build/docs/configuration/v2/buf-gen-yaml
+version: v2
+inputs:
+  - directory: ../../backend
+plugins:
+  - local: protoc-proto-es
+    opt: target=ts
+    out: src/proto
