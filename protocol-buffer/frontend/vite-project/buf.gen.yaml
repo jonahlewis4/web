@@ -3,6 +3,6 @@ version: v2
 inputs:
   - directory: ../../backend/proto
 plugins:
-  - local: protoc-proto-es
+  - local: protoc-gen-es
     opt: target=ts
     out: src/proto
