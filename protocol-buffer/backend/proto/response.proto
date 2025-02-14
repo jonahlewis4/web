@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package message;
+package proto;
 
-option go_package = "./";
+option go_package = "backend/proto";
 
 message Message {
 	string message = 1;
