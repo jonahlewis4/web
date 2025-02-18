@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-pod #attach the pods with tag 'webapp-pod' to this deployment
+
+
+
+  #template is the pod that gets created
+  template:
+    metadata:
+      labels:
+        app: webapp-pod
+
+    #configure deployment to create pods with
+    spec:
+      containers:
+        - name: webapp
+          image: nanajanashia/k8s-demo-app:v1.0  #very simple nodejs app that starts on port 3000
+          ports:
+            - containerPort: 3000
+          env:
+            - name: USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret #name of the file to look at
+                  key: mongo-user # name of the field to use
+            - name: USER_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-password
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: mongo-url
+
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service #endpoint used to access this service. This is referenced by mongo-config.yaml (the config map)
+spec:
+  selector:
+    app: webapp-pod    #matches the label of the pod to forward requests sent to mongo-service to
+  ports:
+    - protocol: TCP
+      port: 3000  #port can differ from targetPort, but often they are the same because it's less ports.
+      targetPort: 3000   #targetPort should always be the same as containerPort. It specifiers where the service should forward the request to.

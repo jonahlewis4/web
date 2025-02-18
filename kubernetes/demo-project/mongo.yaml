@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-pod #attach the pods with tag 'mongo-pod' to this deployment
+
+
+
+  #template is the pod that gets created
+  template:
+    metadata:
+      labels:
+        app: mongo-pod
+
+    #configure deployment to create pods with mongodb 5.0 image
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:5.0
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret #name of the file to look at
+                  key: mongo-user # name of the field to use
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-password
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service #endpoint used to access this service. This is referenced by mongo-config.yaml (the config map)
+spec:
+  selector:
+    app: mongo-pod    #matches the label of the pod to forward requests sent to mongo-service to
+  ports:
+    - protocol: TCP
+      port: 27017  #port can differ from targetPort, but often they are the same because it's less ports.
+      targetPort: 27017   #targetPort should always be the same as containerPort. It specifiers where the service should forward the request to.
