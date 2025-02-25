@@ -9,6 +9,14 @@ fn main() {
 
     foobar(5);
 
+
+    let x = 6;
+    match x {
+        1 => println!("one"),
+        2 | 3 | 4 | 5 => println!("2 | 3 | 4 | 5"),
+        _ => println!("Anything else"),
+    }
+
 }
 
 fn foobar(param : i8){
