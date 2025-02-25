@@ -7,12 +7,10 @@ fn main() {
     foo = 7;
     println!("Hello, world! foo: {} unsigned_foo: {}", foo, unsigned_foo);
 
-    let z = foobar();
+    foobar(5);
 
-    println!("z is {}", z)
 }
 
-fn foobar() -> i32{
-    println!("Function");
-    5
+fn foobar(param : i8){
+    println!("{}", param);
 }
