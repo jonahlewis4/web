@@ -14,5 +14,5 @@ fn main() {
 
 fn foobar() -> i32{
     println!("Function");
-    return 5;
+    5
 }
