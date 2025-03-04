@@ -1,0 +1,32 @@
+.Name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #cfc7ff;
+    padding: 3%;
+    color: fuchsia;
+}
+
+html{
+    background-color: #8aedb6;
+}
+
+.john-pork div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.john-pork img{
+    width: 75%;
+}
+header ul {
+    background-color: #cfc7ff;
+    padding: 1%;
+}
+header ul li {
+    padding: 1%;
+    list-style: none;
+    text-align: center;
+}
