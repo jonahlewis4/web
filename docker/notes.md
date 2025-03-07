@@ -35,3 +35,13 @@ run a container based on an image
 ```bash
 docker run -it --rm my-ubuntu-image
 ```
+
+create a volume
+```bash
+docker volume create my-volumne
+```
+
+run with a volume mounted, allowing persistent storage
+```bash
+docker run -it --rm --mount source=my-volume,destination=/my-data/ ubuntu:22.04
+```
