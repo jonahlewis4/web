@@ -5,7 +5,7 @@ docker run --interactive --tty --rm ubuntu:22.04
 
 running ubuntu:22.04 with a name and without --rm. The container will still exist on the system after exiting.
 ```bash
-docker run --interactive --tty --name my-ubuntu-container ubuntu:22.04\
+docker run --interactive --tty --name my-ubuntu-container ubuntu:22.04
 ```
 
 list all containers (use -a to view containers that aren't started)
@@ -18,7 +18,20 @@ restart a container:
 docker start my-ubuntu-container
 ```
 
-attach to container
+attach to container and enter shell
 ```bash
 docker attach my-ubuntu-container
+```
+
+build a container image with ubuntu image as base and ping install
+```bash
+docker build --tag my-ubuntu-image -<<EOF
+FROM ubuntu:22.04
+RUN apt update && apt install iputils-ping --yes
+EOF
+```
+
+run a container based on an image
+```bash
+docker run -it --rm my-ubuntu-image
 ```
