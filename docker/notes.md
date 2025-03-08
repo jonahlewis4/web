@@ -41,7 +41,12 @@ create a volume
 docker volume create my-volumne
 ```
 
-run with a volume mounted, allowing persistent storage
+run with a volume mounted, allowing persistent storage (file lives in docker)
 ```bash
 docker run -it --rm --mount source=my-volume,destination=/my-data/ ubuntu:22.04
+```
+
+run with a bind mounted in present working directory, allowing persistent storage
+```bash
+docker run -it --rm --mount type=bind,source="${PWD}"/my-data,destination=/my-data ubunntu:22.04
 ```
