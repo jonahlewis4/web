@@ -1,2 +1,4 @@
 .idea
 .idea/*
+go-workspace/
+node_modules/
