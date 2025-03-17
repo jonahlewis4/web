@@ -24,7 +24,7 @@ FROM scratch
 
 ENV GIN_MODE=release
 
-COPY --from=build /etc/passwd /etc/paswd
+COPY --from=build /etc/passwd /etc/passwd
 
 COPY --from=build /app/api-golang api-golang
 

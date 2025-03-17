@@ -13,14 +13,16 @@ import (
 
 func init() {
 	databaseUrl := os.Getenv("DATABASE_URL")
+	log.Println("database url:", databaseUrl)
+
 	if databaseUrl == "" {
+		log.Println("DATABASE_URL enviornment variable is not set!")
 		content, err := ioutil.ReadFile(os.Getenv("DATABASE_URL_FILE"))
 		if err != nil {
 			log.Fatal(err)
 		}
 		databaseUrl = string(content)
 	}
-
 	errDB := database.InitDB(databaseUrl)
 	if errDB != nil {
 		log.Fatalf("⛔ Unable to connect to database: %v\n", errDB)
