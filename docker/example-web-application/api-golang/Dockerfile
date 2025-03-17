@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine
+FROM golang:1.19-alpine as build
 
 WORKDIR /app
 
@@ -8,6 +8,15 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o api-golang
+RUN go build \
+    -ldflags="linkmode external -extldflags -static"\
+    -tags netgo \
+    -o api-golang
 
-CMD ["./api-golang"]
+
+###
+FROM scratch
+
+COPY --from=build /app/api-golang api-golang
+
+CMD ["/api-golang"]
