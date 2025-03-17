@@ -50,14 +50,15 @@ docker-run-all:
 		--restart unless-stopped \
 		--link=db \
 		api-golang
-#	docker run -d \
-#		--name client-react-vite \
-#		--network my-network \
-#		-e DATABASE_URL=$(DATABASE_URL)\
-#		-p 5173:5173 \
-#		--restart unless-stopped \
-#		--link=db \
-#		client-react-vite
+
+	docker run -d \
+		--name client-react-vite \
+		--network my-network \
+		-v $(PWD)/vite.config.js:/usr/src/app/vite.config.js \
+		-p 5173:5173 \
+		--restart unless-stopped \
+		--link=db \
+		client-react-vite
 #	docker run -d \
 #		--name client-react-nginx \
 #		--network my-network \
