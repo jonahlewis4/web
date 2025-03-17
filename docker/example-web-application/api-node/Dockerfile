@@ -1,6 +1,4 @@
-FROM ubuntu
-
-RUN apt update && apt install nodejs npm -y
+FROM node:current-alpine3.21
 
 COPY . .
 
