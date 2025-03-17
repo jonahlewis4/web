@@ -4,15 +4,15 @@ DOCKERCONTEXT_DIR:=../example-web-application
 
 .PHONY: docker-build-all
 docker-build-all:
-	docker build -t client-react-vite -f ${DOCKERFILE_DIR}/client-react/Dockerfile.3 ${DOCKERCONTEXT_DIR}/client-react/
+	docker build -t client-react-vite -f $(DOCKERFILE_DIR)/client-react/Dockerfile.3 $(DOCKERCONTEXT_DIR)/client-react/
 
-	docker build -t client-react-ngnix -f ${DOCKERFILE_DIR}/client-react/Dockerfile.5 ${DOCKERCONTEXT_DIR}/client-react/
+	docker build -t client-react-ngnix -f $(DOCKERFILE_DIR)/client-react/Dockerfile.5 $(DOCKERCONTEXT_DIR)/client-react/
 
-	docker build -t api-node -f ${DOCKERFILE_DIR}/api-node/Dockerfile.7 ${DOCKERCONTEXT_DIR}/api-node/
+	docker build -t api-node -f $(DOCKERFILE_DIR)/api-node/Dockerfile.7 $(DOCKERCONTEXT_DIR)/api-node/
 
-	docker build -t api-golang -f ${DOCKERFILE_DIR}/api-golang/Dockerfile.6 ${DOCKERCONTEXT_DIR}/api-golang
+	docker build -t api-golang -f $(DOCKERFILE_DIR)/api-golang/Dockerfile.6 $(DOCKERCONTEXT_DIR)/api-golang
 
-DATABASE_URL:=postgres://postres:foobarbaz@db:5432/postgres
+DATABASE_URL:=postgres://postgres:foobarbaz@db:5432/postgres
 
 .PHONY: docker-run-all
 docker-run-all:
@@ -36,29 +36,34 @@ docker-run-all:
 	docker run -d \
 		--name api-node \
 		--network my-network \
-		-e DATABASE_URL=${DATABASE_URL}\
+		-e DATABASE_URL=$(DATABASE_URL) DATABASE \
 		-p 3000:3000 \
 		--restart unless-stopped \
+		--link=db \
 		api-node
+
 	docker run -d \
 		--name api-golang \
 		--network my-network \
-		-e DATABASE_URL=${DATABASE_URL}\
+		-e DATABASE_URL=$(DATABASE_URL) \
 		-p 8080:8080 \
 		--restart unless-stopped \
+		--link=db \
 		api-golang
 	docker run -d \
 		--name client-react-vite \
 		--network my-network \
-		-e DATABASE_URL=${DATABASE_URL}\
+		-e DATABASE_URL=$(DATABASE_URL)\
 		-p 5173:5173 \
 		--restart unless-stopped \
+		--link=db \
 		client-react-vite
 	docker run -d \
 		--name client-react-nginx \
 		--network my-network \
 		-p 80:8080 \
 		--restart unless-stopped \
+		--link=db\
 		client-react-ngnix
 
 .PHONY: docker-stop
