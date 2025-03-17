@@ -51,6 +51,8 @@ docker-run-all:
 		--link=db \
 		api-golang
 
+	echo "pws: $(PWD)"
+
 	docker run -d \
 		--name client-react-vite \
 		--network my-network \
@@ -59,6 +61,7 @@ docker-run-all:
 		--restart unless-stopped \
 		--link=db \
 		client-react-vite
+
 #	docker run -d \
 #		--name client-react-nginx \
 #		--network my-network \
@@ -83,3 +86,8 @@ docker-rm:
 	-docker container rm client-react-vite
 	-docker container rm client-react-nginx
 	-docker network rm my-network
+
+.PHONY: print-pwd
+print-pwd:
+	cd ..
+	echo $(PWD)
