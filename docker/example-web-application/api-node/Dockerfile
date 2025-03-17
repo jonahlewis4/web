@@ -4,11 +4,13 @@ FROM node:current-alpine3.21
 WORKDIR /user/src/app
 
 #set to production mode
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN --mount=type=cache,target=/usr/src/app/.npm \
+    npm set cache /user/src/app/.npm && \
+    npm ci --only=production
 
 #node is a user from the node image.
 USER node
