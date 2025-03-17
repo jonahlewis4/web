@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine as build
+FROM golang:1.19-buster AS build
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN go mod download
 COPY . .
 
 RUN go build \
-    -ldflags="linkmode external -extldflags -static"\
+    -ldflags="-linkmode external -extldflags -static"\
     -tags netgo \
     -o api-golang
 
