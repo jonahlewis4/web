@@ -62,13 +62,13 @@ docker-run-all:
 		--link=db \
 		client-react-vite
 
-#	docker run -d \
-#		--name client-react-nginx \
-#		--network my-network \
-#		-p 80:8080 \
-#		--restart unless-stopped \
-#		--link=db\
-#		client-react-ngnix
+	docker run -d \
+		--name client-react-nginx \
+		--network my-network \
+		-p 80:8080 \
+		--restart unless-stopped \
+		--link=db\
+		client-react-ngnix
 
 .PHONY: docker-stop
 docker-stop:
@@ -89,5 +89,4 @@ docker-rm:
 
 .PHONY: print-pwd
 print-pwd:
-	cd ..
 	echo $(PWD)
