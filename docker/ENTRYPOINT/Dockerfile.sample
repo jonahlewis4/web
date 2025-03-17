@@ -20,8 +20,9 @@ RUN ["echo", "Hey Team 👋 (exec form)"]
 # be run within a single step, across multiple lines
 # without lots of && and \
 RUN <<EOF
-apt update
-apt install iputils-ping -y
+apt-get clean
+apt-get update
+apt-get install iputils-ping -y
 EOF
 
 # --mount allows for mounting additional files
