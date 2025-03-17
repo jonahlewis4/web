@@ -15,4 +15,7 @@ USER node
 
 COPY --chown=node:node ./src .
 
+#this is just documentation, so people know to publish on port 3000.
+EXPOSE 3000
+
 CMD ["node", "index.js"]
