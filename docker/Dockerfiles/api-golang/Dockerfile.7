@@ -1,7 +1,7 @@
 # Pin specific version for stability
 # Use separate stage for building image
 # Use debian for easier build utilities
-FROM golang:1.19-bullseye AS build-base
+FROM golang:1.24.1-bullseye AS build-base
 
 
 WORKDIR /app
@@ -14,13 +14,13 @@ RUN --mount=type=cache,target=/go/pkg/mod \
   --mount=type=cache,target=/root/.cache/go-build \
   go mod download
 
-FROM build-base AS build-dev
-RUN go install github.com/cosmtrek/air@latest && \
+FROM build-base AS dev
+RUN go install github.com/air-verse/air@latest && \
     go install github.com/go-delve/delve/cmd/dlv@latest
 
 COPY . .
 
-CMD ["air", "-c", ".air.toml"]
+CMD air -c .air.toml
 
 FROM build-base AS build-production
 COPY . .
@@ -36,7 +36,7 @@ RUN go build \
   -o api-golang
 
 # Use separate stage for deployable image
-FROM scratch
+FROM scratch AS production
 
 # Set gin mode
 ENV GIN_MODE=release
