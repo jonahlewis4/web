@@ -39,6 +39,12 @@ services:
       context: ${DOCKERCONTEXT_DIR}/api-node/
       dockerfile: ${DOCKERFILE_DIR}/api-node/Dockerfile.7
     init: true
+    volumes:
+      - type: bind
+        source: ../example-web-application/api-node
+        target: /usr/src/app
+      - type: volume
+        target: /usr/src/app/node_modules
     depends_on:
       - db #don't start until db is there.
     environment:
