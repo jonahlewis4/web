@@ -59,7 +59,7 @@ services:
         - frontend
         - backend
       ports:
-        - 8080:8080
+        - "8080:8080"
       restart: unless-stopped
   db:
       image: postgres:15.1-alpine
@@ -70,7 +70,7 @@ services:
       networks:
         - backend
       ports:
-        - 5432:5432
+        - "5432:5432"
 volumes:
   pgdata: #postgress data volume
 networks:
