@@ -57,8 +57,13 @@ services:
       image: api-golang
       build:
         context: ${DOCKERCONTEXT_DIR}/api-golang/
-        dockerfile: ${DOCKERFILE_DIR}/api-golang/Dockerfile.6
+        dockerfile: ${DOCKERFILE_DIR}/api-golang/Dockerfile.7
+        target: dev
       init: true
+      volumes:
+        - type: bind
+          source: ../example-web-application/api-golang
+          target: /app/
       depends_on:
         - db
       environment:
