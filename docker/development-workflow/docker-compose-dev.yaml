@@ -31,18 +31,16 @@ services:
       - "80:8080"
     restart: unless-stopped
   api-node:
-    labels:
-      shipyard.route: '/api/node/'
-      shipyard.route.rewrite: true
     image: api-node
     build:
       context: ${DOCKERCONTEXT_DIR}/api-node/
-      dockerfile: ${DOCKERFILE_DIR}/api-node/Dockerfile.7
+      dockerfile: ${DOCKERFILE_DIR}/api-node/Dockerfile.8
+      target: dev
     init: true
     volumes:
       - type: bind
-        source: ../example-web-application/api-node
-        target: /usr/src/app
+        source: ../example-web-application/api-node/
+        target: /usr/src/app/
       - type: volume
         target: /usr/src/app/node_modules
     depends_on:
@@ -56,9 +54,6 @@ services:
       - "3000:3000"
     restart: unless-stopped
   api-golang:
-      labels:
-        shipyard.route: '/api/golang/'
-        shipyard.route.rewrite: true
       image: api-golang
       build:
         context: ${DOCKERCONTEXT_DIR}/api-golang/
