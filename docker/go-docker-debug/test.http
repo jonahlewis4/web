@@ -1,3 +1,0 @@
-# Run a test request
-GET /
-Host: localhost:8080
