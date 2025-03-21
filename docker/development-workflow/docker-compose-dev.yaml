@@ -63,7 +63,7 @@ services:
       volumes:
         - type: bind
           source: ../example-web-application/api-golang
-          target: /go/web/docker/example-web-application/api-golang
+          target: /go/web/docker/example-web-application/api-golang  #need to find cleaner way of doing this with GOPATH. ALso are copying other files.
       depends_on:
         - db
       environment:
