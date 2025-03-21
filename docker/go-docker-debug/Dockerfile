@@ -5,10 +5,10 @@ FROM golang:1.23.4
 RUN go install github.com/go-delve/delve/cmd/dlv@v1.24.1
 
 # Set working directory inside the container
-WORKDIR /go/web/docker/go-docker-debug/
+WORKDIR $GOPATH/web/docker/go-docker-debug/
 
 # Copy your Go project into the container
-COPY . /go/web/docker/go-docker-debug/
+COPY . $GOPATH/web/docker/go-docker-debug/
 
 # Expose the Delve debug port
 EXPOSE 2345
