@@ -63,7 +63,7 @@ services:
       volumes:
         - type: bind
           source: ../example-web-application/api-golang
-          target: /app/
+          target: /go/web/docker/example-web-application/api-golang
       depends_on:
         - db
       environment:

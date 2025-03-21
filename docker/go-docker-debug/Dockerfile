@@ -5,7 +5,7 @@ FROM golang:1.23.4
 RUN go install github.com/go-delve/delve/cmd/dlv@v1.24.1
 
 # Set working directory inside the container
-WORKDIR $GOPATH/web/docker/go-docker-debug/
+WORKDIR $GOPATH/web/docker/go-docker-debug/test
 
 # Copy your Go project into the container
 COPY . $GOPATH/web/docker/go-docker-debug/
@@ -14,4 +14,4 @@ COPY . $GOPATH/web/docker/go-docker-debug/
 EXPOSE 2345
 
 # Start Delve in headless mode
-CMD ["dlv", "debug", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient"]
+CMD ["dlv", "debug", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient", "../"]

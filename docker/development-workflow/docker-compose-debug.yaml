@@ -1,5 +1,4 @@
 #we can use docker-compose-dev, and just addon/replace the differences we need.
-version: "3.9"
 services:
   api-node:
     command: npm run debug-docker
@@ -10,7 +9,7 @@ services:
     command:
       - "dlv"
       - "debug"
-      - "/app/main.go"
+      - "/go/web/docker/example-web-application/api-golang/main.go"
       - "--listen=:4000"
       - "--headless=true"
       - "--log=true"
