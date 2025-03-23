@@ -1,0 +1,26 @@
+#we can use docker-compose-dev, and just addon/replace the differences we need.
+services:
+  api-node:
+    command: npm run debug-docker
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+  api-golang:
+    command:
+      - "dlv"
+      - "debug"
+      - "/go/web/docker/example-web-application/api-golang/main.go"
+      - "--listen=:4000"
+      - "--headless=true"
+      - "--log=true"
+      - "--log-output=debugger,debuglineerr,gdbwire,lldbout,rpc"
+      - "--accept-multiclient"
+      - "--continue"
+      - "--api-version=2"
+    ports:
+      - "8080:8080"
+      - "4000:4000"
+    security_opt:
+      - "apparmor=unconfined"
+    cap_add:
+      - SYS_PTRACE

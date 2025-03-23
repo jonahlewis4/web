@@ -1,0 +1,78 @@
+
+services:
+  client-react-vite:
+      image: client-react-vite
+      build:
+        context: ${DOCKERCONTEXT_DIR}/client-react
+        dockerfile: ${DOCKERFILE_DIR}/client-react/Dockerfile.3
+      init: true
+      volumes:
+        - ${PWD}/vite.config.js:/usr/src/app/vite.config.js
+      networks:
+        - frontend
+      ports:
+        - "5173:5173"
+  client-react-nginx:
+    image: client-react-nginx
+    build:
+      context: ${DOCKERCONTEXT_DIR}/client-react
+      dockerfile: ${DOCKERFILE_DIR}/client-react/Dockerfile.5
+    init: true
+    networks:
+      - frontend
+    ports:
+      - "80:8080"
+    restart: unless-stopped
+  api-node:
+    labels:
+      shipyard.route: '/api/node/'
+      shipyard.route.rewrite: true
+    image: api-node
+    build:
+      context: ${DOCKERCONTEXT_DIR}/api-node/
+      dockerfile: ${DOCKERFILE_DIR}/api-node/Dockerfile.7
+    init: true
+    depends_on:
+      - db #don't start until db is there.
+    environment:
+      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+  api-golang:
+      labels:
+        shipyard.route: '/api/golang/'
+        shipyard.route.rewrite: true
+      image: api-golang
+      build:
+        context: ${DOCKERCONTEXT_DIR}/api-golang/
+        dockerfile: ${DOCKERFILE_DIR}/api-golang/Dockerfile.6
+      init: true
+      depends_on:
+        - db
+      environment:
+        - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+      networks:
+        - frontend
+        - backend
+      ports:
+        - "8080:8080"
+      restart: unless-stopped
+  db:
+      image: postgres:15.1-alpine
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_PASSWORD=foobarbaz
+      networks:
+        - backend
+      ports:
+        - "5432:5432"
+volumes:
+  pgdata: #postgress data volume
+networks:
+  frontend:
+  backend:
