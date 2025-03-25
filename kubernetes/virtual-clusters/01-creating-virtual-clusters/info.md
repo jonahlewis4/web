@@ -17,3 +17,8 @@ connect to a virtual cluster
 ```bash
 vcluster connect my-vcluster --namespace a-team
 ```
+
+connect and print out a kubeconfig
+```bash
+vcluster connect my-vcluster --project my-project --print --namespace a-team 
+```
