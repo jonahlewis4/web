@@ -2,3 +2,6 @@
 .idea/*
 go-workspace/
 node_modules/
+.venv/
+.devbox/
+kind-config.yaml
