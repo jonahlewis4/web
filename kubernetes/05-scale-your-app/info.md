@@ -24,3 +24,5 @@ scale down to 2 replicas
 ```bash
 kubectl scale deployments/kubernetes-bootcamp --replicas=2
 ```
+
+
