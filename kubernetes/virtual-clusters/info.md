@@ -22,3 +22,8 @@ connect and print out a kubeconfig
 ```bash
 vcluster connect my-vcluster --project my-project --print --namespace a-team 
 ```
+
+change kubeconfig to specific file.
+```bash
+export KUBECONFIG=${PWD}/kubeconfig.yaml
+```
