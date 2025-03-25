@@ -1,6 +1,0 @@
-version: "3"
-
-includes:
-  setup:
-    taskfile: ./tooling-setup/Taskfile.yaml
-    dir: ./tooling-setup/
