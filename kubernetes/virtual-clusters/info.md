@@ -27,3 +27,8 @@ change kubeconfig to specific file.
 ```bash
 export KUBECONFIG=${PWD}/kubeconfig.yaml
 ```
+
+remove virtual cluster
+```bash
+vcluster --namespace a-team delete my-vcluster
+```
