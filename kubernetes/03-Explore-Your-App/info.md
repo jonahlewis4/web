@@ -26,3 +26,8 @@ get logs
 ```bash
 kubectl logs "$POD_NAME"
 ```
+
+enter shell of a pod
+```bash
+kubectl exec -ti $POD_NAME -- bash
+```
