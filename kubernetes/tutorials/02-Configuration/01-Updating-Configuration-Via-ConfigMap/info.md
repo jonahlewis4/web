@@ -79,3 +79,18 @@ after rollout, logs will have mangoes.
 ```bash
 kubectl logs deployment/configmap-env-var
 ```
+
+# ConfigMap In a multi-container Pod
+```bash
+kubectl create configmap color --from-literal=color=red
+```
+
+expose the deployment 
+```bash
+kubectl expose deployment configmap-two-containers --name=configmap-service --port=8080 --target-port=80
+```
+
+forward the port
+```bash
+kubectl port-forward service/configmap-service 8080:8080 &
+```
