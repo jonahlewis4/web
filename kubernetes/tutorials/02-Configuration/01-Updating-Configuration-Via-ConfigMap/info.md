@@ -37,3 +37,45 @@ edit a ConfigMap
 ```bash
 kubectl edit configmap sport
 ```
+
+tail logs
+```bash
+kubectl logs deployments/configmap-volume --follow
+```
+create another ConfigMap from literal values
+```bash
+kubectl create configmap fruits --from-literal=fruits=apples
+```
+
+create a deployment using a config map as enviornment variables
+```bash
+kubectl apply -f deployment-with-configmap-as-envvar.yaml
+```
+
+get logs of the envvar guys
+```bash
+kubectl logs deployment/configmap-env-var
+```
+
+the envvar one won't change!!!  because the enviornment variables are already set.
+```bash
+kubectl logs deployments/configmap-env-var --follow
+```
+rollout an update to the deployment and wait for it to finish.
+```bash
+# Trigger the rollout
+kubectl rollout restart deployment configmap-env-var
+
+# Wait for the rollout to complete
+kubectl rollout status deployment configmap-env-var --watch=true
+```
+
+Get all pods with a given selector (again)
+```bash
+ kubectl get pods --selector=app.kubernetes.io/name=configmap-env-var
+```
+
+after rollout, logs will have mangoes.
+```bash
+kubectl logs deployment/configmap-env-var
+```
