@@ -94,3 +94,46 @@ forward the port
 ```bash
 kubectl port-forward service/configmap-service 8080:8080 &
 ```
+
+# Update config via ConfigMap in a pod possessing a sidecar container
+create sidecar application
+```bash
+kubectl apply -f deployment-with-configmap-and-sidecar-container.yaml
+```
+
+expose and forward a port for the exposed service. 
+```bash
+kubectl expose deployment configmap-sidecar-container --name=configmap-sidecar-service --port=8081 --target-port=80
+kubectl port-forward service/configmap-sidecar-service 8081:8081 &
+```
+
+access the service.
+```bash
+curl http://localhost:8081
+```
+
+# immutable configmap:
+
+create an immutable configmap 
+```bash
+kubectl apply -f immutable-configmap.yaml
+```
+
+create a deployment that uses the said immutable configmap
+```bash
+kubectl apply -f deployment-with-immutable-configmap-as-volume.yaml
+```
+
+
+We cannot change an immutable configmap. Instead we need to create a new
+config map and edit the deployment to use the new configmap and rollout.
+(editing the deployment WILL trigger a rollout.)
+```bash
+kubectl apply -f new-immutable-configmap.yaml
+kubectl edit deployment immutable-configmap-volume
+```
+
+good practice to delete the old no longer used configmap.
+```bash
+kubectl delete configmap company-name-20150801
+```
