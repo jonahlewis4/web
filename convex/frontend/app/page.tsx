@@ -13,6 +13,11 @@ export default function HomePage() {
         <strong>Message from Convex:</strong>{" "}
         {message ?? "Loading message from Convex..."}
       </p>
+      <p>
+        <a href="/auth-status" style={{ color: "#06c" }}>
+          Auth status (Clerk + Convex) →
+        </a>
+      </p>
     </main>
   );
 }

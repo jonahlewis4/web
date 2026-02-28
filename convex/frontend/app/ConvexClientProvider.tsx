@@ -1,14 +1,13 @@
 "use client";
 
 import { ConvexReactClient } from "convex/react";
-import { ConvexProvider } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
+import { useAuth } from "@clerk/nextjs";
 import type { ReactNode } from "react";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
 if (!convexUrl) {
-  // In a real app you might want something more robust here,
-  // but for this demo we'll just log so it's obvious what's wrong.
   // eslint-disable-next-line no-console
   console.warn(
     "NEXT_PUBLIC_CONVEX_URL is not set. Convex React client will not work."
@@ -26,10 +25,14 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
           Set <code>NEXT_PUBLIC_CONVEX_URL</code> in <code>.env.local</code> to
           point to your Convex dev deployment.
         </p>
+        {children}
       </main>
     );
   }
 
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+  return (
+    <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+      {children}
+    </ConvexProviderWithClerk>
+  );
 }
-
