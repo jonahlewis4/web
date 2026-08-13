@@ -5,3 +5,5 @@ node_modules/
 .venv/
 .devbox/
 kind-config.yaml
+
+__pycache__
